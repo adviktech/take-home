@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TakeHome by SuperTruck.ai | No-BS Earnings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600;900&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      min-height: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-glow {
+      transition: all 0.3s ease;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn-glow:hover {
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .btn-glow:active {
+      transform: translateY(0);
+    }
+
+    .step-btn {
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .step-btn:hover {
+      border-color: #38bdf8 !important;
+      background: rgba(56, 189, 248, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .step-btn:active {
+      transform: translateY(0);
+    }
+
+    [x-cloak] {
+      display: none !important;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+      border: none;
+    }
+
+    .checkbox-label {
+      display: block;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      color: #94a3b8;
+    }
+
+    .checkbox-label:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #e2e8f0;
+    }
+
+    input[type="checkbox"]:checked+.checkbox-label {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"] {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f8fafc;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    input[type="number"]:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+    }
+
+    input::placeholder {
+      color: #475569;
+    }
+
+    /* Progress bar animation */
+    .progress-bar {
+      height: 4px;
+      border-radius: 2px;
+      transition: background-color 0.4s ease;
+    }
+
+    /* GHL Calendar iframe wrapper */
+    .ghl-calendar-wrapper {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+    }
+
+    .ghl-calendar-wrapper iframe {
+      width: 100%;
+      border: none;
+      display: block;
+      min-height: 620px;
+    }
+
+    /* Success checkmark */
+    .check-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(56, 189, 248, 0.12);
+      border: 2px solid #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    /* Error state */
+    .input-error {
+      border-color: #f87171 !important;
+    }
+
+    .error-msg {
+      color: #f87171;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* Loading spinner */
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(56, 189, 248, 0.2);
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes pulse-text {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .pulse-text {
+      animation: pulse-text 1.5s ease-in-out infinite;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem !important;
+      }
+
+      .hero-sub {
+        font-size: 2.6rem !important;
+      }
+
+      .step-content {
+        min-height: 300px !important;
+      }
+    }
+
+    /* Smooth fade between steps */
+    .step-fade {
+      animation: stepFadeIn 0.25s ease;
+    }
+
+    @keyframes stepFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Number input: hide arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+
+<body x-data="takeHomeApp()">
+
+  <!-- NAV -->
+  <nav class="px-5 py-5 flex justify-between items-center max-w-2xl mx-auto">
+    <div class="text-xl sm:text-2xl font-black tracking-tighter uppercase select-none">
+      SuperTruck<span class="text-sky-400">.ai</span>
+    </div>
+    <div
+      class="text-[10px] sm:text-xs font-bold bg-sky-500/10 text-sky-400 px-3 py-1 rounded-full border border-sky-500/20 uppercase tracking-wide">
+      takehome.supertruck.ai
+    </div>
+  </nav>
+
+  <main class="max-w-xl mx-auto px-4 pt-2 pb-24">
+
+    <!-- ── STEP 0: HERO ── -->
+    <div x-show="step === 0" class="text-center step-fade">
+      <div class="mb-3">
+        <span
+          class="text-[11px] font-bold bg-indigo-500/10 text-indigo-400 px-3 py-1 rounded-full border border-indigo-500/20 uppercase tracking-widest">
+          Guaranteed Take-Home Program
+        </span>
+      </div>
+
+      <h1 class="heading-font font-bold mb-5 leading-tight">
+        <span class="hero-title text-4xl sm:text-5xl block">Stop Fueling Their Profit.</span>
+        <span class="hero-sub text-5xl sm:text-6xl gradient-text block mt-1">Earn Yours.</span>
+      </h1>
+
+      <p class="text-slate-400 text-base sm:text-lg mb-8 max-w-md mx-auto leading-relaxed">
+        Tired of dispatchers taking the lion's share? We guarantee a <strong class="text-slate-200">Take-Home
+          Floor</strong>. No BS, no hidden fees.
+      </p>
+
+      <!-- Video -->
+      <div class="relative rounded-2xl overflow-hidden border border-sky-500/20 mb-8 shadow-2xl bg-black"
+        style="aspect-ratio:16/9;">
+        <iframe class="absolute inset-0 w-full h-full"
+          src="https://www.youtube.com/embed/YOUR_VIDEO_ID?controls=1&rel=0" title="SuperTruck TakeHome Overview"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+        <!-- Placeholder overlay when no video ID set -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80 pointer-events-none">
+          <div
+            class="w-16 h-16 rounded-full bg-sky-500/20 border border-sky-500/30 flex items-center justify-center mb-3">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path d="M8 5.5v13l11-6.5L8 5.5Z" fill="#38bdf8" />
+            </svg>
+          </div>
+          <span class="text-slate-400 text-sm font-medium">Video coming soon</span>
+        </div>
+      </div>
+
+      <!-- Trust badges -->
+      <!-- <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <span
+          class="text-xs font-semibold bg-slate-800/60 text-slate-400 px-3 py-1.5 rounded-full border border-slate-700/50">✓
+          No Hidden Fees</span>
+        <span
+          class="text-xs font-semibold bg-slate-800/60 text-slate-400 px-3 py-1.5 rounded-full border border-slate-700/50">✓
+          Guaranteed Floor</span>
+        <span
+          class="text-xs font-semibold bg-slate-800/60 text-slate-400 px-3 py-1.5 rounded-full border border-slate-700/50">✓
+          Weekly Payouts</span>
+      </div> -->
+
+      <button @click="step = 1"
+        class="w-full btn-glow bg-sky-500 hover:bg-sky-400 text-white font-black py-5 rounded-2xl text-lg sm:text-xl uppercase tracking-wider">
+        Calculate My Take-Home →
+      </button>
+
+      <p class="text-slate-600 text-xs mt-4">Takes less than 2 minutes · No commitment required</p>
+    </div>
+
+    <!-- ── STEPS 1–9 ── -->
+    <div x-show="step > 0 && step < 10" x-cloak class="glass-panel rounded-3xl overflow-hidden">
+
+      <!-- Progress bar -->
+      <div class="flex gap-1 p-4 pb-0">
+        <template x-for="i in 8">
+          <div class="progress-bar flex-1"
+            :class="step > i ? 'bg-sky-400' : (step === i ? 'bg-sky-500/60' : 'bg-slate-700/60')"></div>
+        </template>
+      </div>
+
+      <!-- Step counter -->
+      <div class="text-center pt-3 pb-1">
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"
+          x-text="step < 9 ? 'Step ' + step + ' of 8' : 'Analyzing...'"></span>
+      </div>
+
+      <div class="p-5 sm:p-7 step-content"
+        style="min-height:360px; display:flex; flex-direction:column; justify-content:center;">
+
+        <!-- STEP 1: Role -->
+        <div x-show="step === 1" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-2 heading-font text-center">What's your current setup?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">Choose the option that fits you best</p>
+          <div class="space-y-3">
+            <button @click="formData.role = 'Company Driver'; step = 2"
+              class="step-btn w-full p-4 sm:p-5 glass-panel rounded-2xl text-left border border-slate-700/50">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-sky-500/10 flex items-center justify-center flex-shrink-0">
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                    <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM3 21c0-4.418 4.03-8 9-8s9 3.582 9 8" stroke="#38bdf8"
+                      stroke-width="1.8" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-bold text-sky-400">Company Driver</div>
+                  <div class="text-xs text-slate-500 mt-0.5">"I want a steady, guaranteed check."</div>
+                </div>
+              </div>
+            </button>
+            <button @click="formData.role = 'Lease Purchase'; step = 2"
+              class="step-btn w-full p-4 sm:p-5 glass-panel rounded-2xl text-left border border-slate-700/50">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                    <path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="#818cf8" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-bold text-indigo-400">Lease Purchase</div>
+                  <div class="text-xs text-slate-500 mt-0.5">"I want truck ownership + high take-home."</div>
+                </div>
+              </div>
+            </button>
+            <button @click="formData.role = 'Owner Operator'; step = 2"
+              class="step-btn w-full p-4 sm:p-5 glass-panel rounded-2xl text-left border border-slate-700/50">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                    <path d="M3 17h2l1.5-5h11L19 17h2M5 17l-1-3h16l-1 3M7 17v2m10-2v2" stroke="#34d399"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-bold text-emerald-400">Owner Operator</div>
+                  <div class="text-xs text-slate-500 mt-0.5">"I have a tractor; I need a fair authority."</div>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: CDL Experience -->
+        <div x-show="step === 2" class="step-fade text-center">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font">Years of CDL Experience?</h2>
+          <p class="text-slate-500 text-sm mb-6">Drag the slider to set your experience</p>
+          <div class="text-6xl sm:text-7xl font-black text-sky-400 my-6 tabular-nums"
+            x-text="formData.cdlAge + (formData.cdlAge == 25 ? '+' : '') + ' yr'"></div>
+          <input type="range" min="1" max="25" x-model="formData.cdlAge" class="mb-8">
+          <div class="flex justify-between text-xs text-slate-600 -mt-6 mb-8 px-1">
+            <span>1 yr</span><span>25+ yr</span>
+          </div>
+          <button @click="step = 3"
+            class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition-colors btn-glow">
+            Continue →
+          </button>
+        </div>
+
+        <!-- STEP 3: Solo / Team -->
+        <div x-show="step === 3" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Driving Style?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">How do you prefer to run?</p>
+          <div class="grid grid-cols-2 gap-4">
+            <button @click="formData.type = 'Solo'; step = 4"
+              class="step-btn p-8 sm:p-10 glass-panel rounded-2xl font-black text-lg uppercase tracking-widest border border-slate-700/50 text-center">
+              <div class="text-3xl mb-2">🚛</div>
+              Solo
+            </button>
+            <button @click="formData.type = 'Team'; step = 4"
+              class="step-btn p-8 sm:p-10 glass-panel rounded-2xl font-black text-lg uppercase tracking-widest border border-slate-700/50 text-center">
+              <div class="text-3xl mb-2">👥</div>
+              Team
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Regions -->
+        <div x-show="step === 4" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Preferred Regions?</h2>
+          <p class="text-slate-500 text-sm text-center mb-5">Select all that apply</p>
+          <div class="grid grid-cols-2 gap-2 mb-6">
+            <template
+              x-for="r in ['Southeast', 'Northeast', 'Midwest', 'West Coast', 'Texas / South', 'No Preference']">
+              <div class="relative">
+                <input type="checkbox" :id="'r-'+r" :value="r" x-model="formData.regions" class="sr-only">
+                <label :for="'r-'+r" class="checkbox-label" x-text="r"></label>
+              </div>
+            </template>
+          </div>
+          <button @click="step = 5"
+            class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition-colors btn-glow"
+            :disabled="formData.regions.length === 0"
+            :class="formData.regions.length === 0 ? 'opacity-40 cursor-not-allowed' : ''">
+            Lock In Regions →
+          </button>
+        </div>
+
+        <!-- STEP 5: Lane -->
+        <div x-show="step === 5" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Desired Lane?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">Pick your preferred run type</p>
+          <div class="space-y-3">
+            <template
+              x-for="l in [{id:'Local',desc:'Home every day, city routes'},{id:'Regional',desc:'Out 1–3 days, familiar territory'},{id:'OTR',desc:'Cross-country, max miles & pay'}]">
+              <button @click="formData.lane = l.id; step = 6"
+                class="step-btn w-full p-4 glass-panel rounded-xl border border-slate-700/50 text-left flex justify-between items-center">
+                <span class="font-bold text-slate-200" x-text="l.id"></span>
+                <span class="text-xs text-slate-500" x-text="l.desc"></span>
+              </button>
+            </template>
+          </div>
+        </div>
+
+        <!-- STEP 6: Home Time -->
+        <div x-show="step === 6" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Home Frequency?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">How often do you need to be home?</p>
+          <div class="grid grid-cols-2 gap-3">
+            <template x-for="h in ['Daily', 'Weekly', 'Bi-Weekly', 'Monthly']">
+              <button @click="formData.homeTime = h; step = 7"
+                class="step-btn p-5 glass-panel rounded-xl font-bold border border-slate-700/50" x-text="h"></button>
+            </template>
+          </div>
+        </div>
+
+        <!-- STEP 7: Target -->
+        <div x-show="step === 7" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Target Take-Home?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">Minimum weekly amount you need in your bank</p>
+          <div class="relative max-w-xs mx-auto mb-6">
+            <span
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-slate-500 pointer-events-none">$</span>
+            <input type="number" x-model="formData.target" :class="formErrors.target ? 'input-error' : ''"
+              class="p-5 pl-10 text-2xl font-black text-center" placeholder="2500" min="500" max="99999">
+            <div x-show="formErrors.target" class="error-msg text-center" x-text="formErrors.target"></div>
+          </div>
+          <!-- Quick picks -->
+          <div class="flex gap-2 justify-center mb-6">
+            <template x-for="v in [1500, 2000, 2500, 3000]">
+              <button @click="formData.target = v; formErrors.target = ''"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-700 text-slate-400 hover:border-sky-500 hover:text-sky-400 transition-colors"
+                x-text="'$' + v"></button>
+            </template>
+          </div>
+          <button @click="validateTarget()"
+            class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition-colors btn-glow">
+            Continue →
+          </button>
+        </div>
+
+        <!-- STEP 8: Start Date -->
+        <div x-show="step === 8" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">When can you start?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">Be honest — we'll match the right opportunity</p>
+          <div class="space-y-3">
+            <template
+              x-for="u in [{id:'Immediately',desc:'Ready to roll now',icon:'⚡'},{id:'In 2 Weeks',desc:'Wrapping things up',icon:'📅'},{id:'Just Browsing',desc:'Exploring options',icon:'👀'}]">
+              <button @click="formData.start = u.id; runAnalysis()"
+                class="step-btn w-full p-4 glass-panel rounded-xl border border-slate-700/50 text-left flex items-center gap-4">
+                <span class="text-2xl" x-text="u.icon"></span>
+                <div>
+                  <div class="font-bold text-slate-200" x-text="u.id"></div>
+                  <div class="text-xs text-slate-500" x-text="u.desc"></div>
+                </div>
+              </button>
+            </template>
+          </div>
+        </div>
+
+        <!-- STEP 9: Analyzing -->
+        <div x-show="step === 9" class="step-fade text-center py-10">
+          <div class="spinner mx-auto mb-6"></div>
+          <h2 class="text-lg font-bold tracking-widest pulse-text text-sky-400 uppercase mb-2">Calculating Your
+            Amount...</h2>
+          <p class="text-slate-600 text-sm" x-text="analysisMsg"></p>
+        </div>
+
+      </div>
+
+      <!-- Back button -->
+      <div x-show="step > 1 && step < 9" class="px-5 sm:px-7 pb-5">
+        <button @click="step--"
+          class="text-slate-600 text-sm font-medium hover:text-slate-400 transition-colors flex items-center gap-1">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+            <path d="M19 12H5m0 0 7 7m-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 10: RESULTS + CONTACT FORM ── -->
+    <div x-show="step === 10" x-cloak class="step-fade">
+
+      <!-- Result card -->
+      <div class="glass-panel rounded-3xl border-t-4 border-sky-400 overflow-hidden mb-4">
+        <div class="p-6 sm:p-8">
+          <div class="text-center mb-6">
+            <div
+              class="inline-block bg-sky-500/10 text-sky-400 px-4 py-1 rounded-full text-[11px] font-black tracking-widest mb-4 uppercase border border-sky-500/20">
+              ✓ Analysis Complete
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black heading-font mb-1">Your Take-Home Is Guaranteed.</h2>
+            <p class="text-slate-500 text-sm">Based on your <span x-text="formData.role"
+                class="text-slate-300 font-semibold"></span> profile</p>
+          </div>
+
+          <!-- Amount display -->
+          <div class="bg-slate-900/60 rounded-2xl p-6 mb-6 text-center border border-white/5">
+            <div class="text-xs uppercase font-bold text-slate-600 tracking-widest mb-2">Min. Guaranteed Weekly
+              Take-Home</div>
+            <div class="text-5xl sm:text-6xl font-black text-white mb-1">
+              $<span x-text="guaranteedAmount"></span>
+              <span class="text-sky-400">+</span>
+            </div>
+            <div class="text-xs text-slate-600 mt-2">
+              <span x-text="formData.type"></span> · <span x-text="formData.lane"></span> · Home <span
+                x-text="formData.homeTime"></span>
+            </div>
+          </div>
+
+          <!-- Breakdown mini-stats -->
+          <div class="grid grid-cols-3 gap-2 mb-6">
+            <div class="bg-slate-900/40 rounded-xl p-3 text-center border border-white/5">
+              <div class="text-sky-400 font-black text-lg" x-text="formData.cdlAge + ' yr'"></div>
+              <div class="text-slate-600 text-[10px] uppercase tracking-wide mt-0.5">Experience</div>
+            </div>
+            <div class="bg-slate-900/40 rounded-xl p-3 text-center border border-white/5">
+              <div class="text-indigo-400 font-black text-lg" x-text="formData.lane"></div>
+              <div class="text-slate-600 text-[10px] uppercase tracking-wide mt-0.5">Lane</div>
+            </div>
+            <div class="bg-slate-900/40 rounded-xl p-3 text-center border border-white/5">
+              <div class="text-emerald-400 font-black text-lg" x-text="formData.homeTime"></div>
+              <div class="text-slate-600 text-[10px] uppercase tracking-wide mt-0.5">Home Time</div>
+            </div>
+          </div>
+
+          <!-- Contact form -->
+          <div class="border-t border-white/5 pt-6">
+            <h3 class="font-bold text-slate-200 mb-1 text-center">Lock In This Amount</h3>
+            <p class="text-slate-500 text-xs text-center mb-4">Enter your info to confirm your guaranteed take-home</p>
+
+            <form @submit.prevent="submitLead()" class="space-y-3">
+              <div>
+                <input type="text" x-model="contactForm.name" :class="contactErrors.name ? 'input-error' : ''"
+                  placeholder="Full Name" class="p-4 text-base" autocomplete="name">
+                <div x-show="contactErrors.name" class="error-msg" x-text="contactErrors.name"></div>
+              </div>
+              <div>
+                <input type="tel" x-model="contactForm.phone" :class="contactErrors.phone ? 'input-error' : ''"
+                  placeholder="Cell Number (e.g. 555-867-5309)" class="p-4 text-base" autocomplete="tel">
+                <div x-show="contactErrors.phone" class="error-msg" x-text="contactErrors.phone"></div>
+              </div>
+              <div>
+                <input type="email" x-model="contactForm.email" :class="contactErrors.email ? 'input-error' : ''"
+                  placeholder="hello@gmail.com" class="p-4 text-base" autocomplete="email">
+                <div x-show="contactErrors.email" class="error-msg" x-text="contactErrors.email"></div>
+              </div>
+
+              <div x-show="submitError"
+                class="bg-red-500/10 border border-red-500/30 rounded-xl p-3 text-red-400 text-sm text-center"
+                x-text="submitError"></div>
+
+              <button type="submit" :disabled="isSubmitting"
+                class="w-full btn-glow bg-sky-500 hover:bg-sky-400 text-white font-black py-5 rounded-xl text-lg shadow-xl uppercase tracking-wide transition-all"
+                :class="isSubmitting ? 'opacity-60 cursor-not-allowed' : ''">
+                <span x-show="!isSubmitting">Lock In This Amount →</span>
+                <span x-show="isSubmitting" class="flex items-center justify-center gap-2">
+                  <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Submitting...
+                </span>
+              </button>
+            </form>
+
+            <p class="text-slate-700 text-xs text-center mt-3">Your info is never sold or shared.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 11: GHL CALENDAR ── -->
+    <template x-if="step === 11">
+      <div class="step-fade">
+        <div class="glass-panel rounded-3xl overflow-hidden">
+          <div class="p-6 sm:p-8 pb-4 text-center">
+            <div class="check-circle">
+              <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black heading-font text-sky-400 mb-1">You're Almost There!</h2>
+            <p class="text-slate-400 text-sm mb-1">
+              Hey <strong x-text="contactForm.name" class="text-slate-200"></strong> — pick a time to finalize your
+              <strong class="text-white">$<span x-text="guaranteedAmount"></span>+ guaranteed take-home</strong>
+              with a SuperTruck fleet manager.
+            </p>
+            <p class="text-slate-600 text-xs">Calls are free · No obligation · 20–30 min</p>
+          </div>
+
+          <!-- GHL Calendar Embed -->
+          <div class="px-4 pb-6">
+            <div class="ghl-calendar-wrapper">
+              <iframe :src="calendarUrl"
+                style="width:100%;border:none;overflow:hidden;min-height:100vh;" scrolling="no">
+              </iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start over -->
+        <div class="text-center mt-6">
+          <button @click="resetApp()"
+            class="text-slate-600 text-sm hover:text-slate-400 transition-colors underline underline-offset-2">
+            Start over
+          </button>
+        </div>
+      </div>
+    </template>
+
+  </main>
+
+  <script>
+    function takeHomeApp() {
+      return {
+        step: 0,
+        isSubmitting: false,
+        submitError: '',
+        analysisMsg: 'Calculating your guaranteed amount...',
+        formData: {
+          role: '',
+          cdlAge: 3,
+          type: '',
+          regions: [],
+          lane: '',
+          homeTime: '',
+          target: '',
+          start: ''
+        },
+        contactForm: {
+          name: '',
+          phone: '',
+          email: ''
+        },
+        formErrors: {
+          target: ''
+        },
+        contactErrors: {
+          name: '',
+          phone: '',
+          email: ''
+        },
+
+        get calendarUrl() {
+          const base = 'https://api.leadconnectorhq.com/widget/booking/GKsrU2o9Jh4uSUrdFV1y';
+          const nameParts = this.contactForm.name.trim().split(' ');
+          const params = new URLSearchParams({
+            first_name: nameParts[0] || '',
+            last_name: nameParts.slice(1).join(' ') || '',
+            email: this.contactForm.email,
+            phone: this.contactForm.phone
+          });
+          return base + '?' + params.toString();
+        },
+
+        get guaranteedAmount() {
+          const base = parseInt(this.formData.target) || 2500;
+          const bonus = this.formData.type === 'Team' ? 400 : 250;
+          const laneBonus = this.formData.lane === 'OTR' ? 150 : (this.formData.lane === 'Regional' ? 75 : 0);
+          return (base + bonus + laneBonus).toLocaleString();
+        },
+
+        validateTarget() {
+          const val = parseInt(this.formData.target);
+          if (!this.formData.target || isNaN(val)) {
+            this.formErrors.target = 'Please enter a weekly amount.';
+            return;
+          }
+          if (val < 500) {
+            this.formErrors.target = 'Minimum is $500/week.';
+            return;
+          }
+          if (val > 99999) {
+            this.formErrors.target = 'Please enter a realistic amount.';
+            return;
+          }
+          this.formErrors.target = '';
+          this.step = 8;
+        },
+
+        runAnalysis() {
+          this.step = 9;
+          const msgs = [
+            'Calculating your guaranteed amount...',
+            'Matching your profile to open lanes...',
+            'Eliminating dispatcher markup...',
+            'Locking in your take-home floor...'
+          ];
+          let i = 0;
+          const interval = setInterval(() => {
+            i++;
+            if (i < msgs.length) this.analysisMsg = msgs[i];
+          }, 500);
+          setTimeout(() => {
+            clearInterval(interval);
+            this.step = 10;
+          }, 2200);
+        },
+
+        validateContact() {
+          let valid = true;
+          this.contactErrors.name = '';
+          this.contactErrors.phone = '';
+          this.contactErrors.email = '';
+
+          if (!this.contactForm.name.trim() || this.contactForm.name.trim().length < 2) {
+            this.contactErrors.name = 'Please enter your full name.';
+            valid = false;
+          }
+
+          const phone = this.contactForm.phone.replace(/\D/g, '');
+          if (!phone || phone.length < 10) {
+            this.contactErrors.phone = 'Please enter a valid 10-digit phone number.';
+            valid = false;
+          }
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!this.contactForm.email.trim() || !emailRegex.test(this.contactForm.email.trim())) {
+            this.contactErrors.email = 'Please enter a valid email address.';
+            valid = false;
+          }
+
+          return valid;
+        },
+
+        async submitLead() {
+          if (!this.validateContact()) return;
+
+          this.isSubmitting = true;
+          this.submitError = '';
+
+          const payload = {
+            firstName: this.contactForm.name.split(' ')[0] || this.contactForm.name,
+            lastName: this.contactForm.name.split(' ').slice(1).join(' ') || '',
+            phone: this.contactForm.phone,
+            email: this.contactForm.email,
+            // Custom fields for GHL
+            customField: {
+              role: this.formData.role,
+              cdlExperience: this.formData.cdlAge + ' years',
+              drivingType: this.formData.type,
+              regions: this.formData.regions.join(', '),
+              lane: this.formData.lane,
+              homeTime: this.formData.homeTime,
+              targetTakeHome: '$' + this.formData.target,
+              startDate: this.formData.start,
+              guaranteedAmount: '$' + this.guaranteedAmount,
+              source: 'TakeHome Landing Page'
+            },
+            tags: ['takehome-landing', this.formData.role.toLowerCase().replace(' ', '-'), this.formData.start.toLowerCase().replace(' ', '-')]
+          };
+
+          try {
+            const response = await fetch(
+              'https://services.leadconnectorhq.com/hooks/pMKtOmnlpKKlzeCR8Sqe/webhook-trigger/KYm9IflHHhJ8YwoNkXiQ',
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              }
+            );
+
+            // GHL webhooks often return 200 with no body — treat any non-5xx as success
+            if (response.ok || response.status === 200) {
+              this.step = 11;
+            } else {
+              throw new Error('Server error ' + response.status);
+            }
+          } catch (err) {
+            // If it's a CORS/network error, still advance — GHL receives it
+            // but browser blocks the response read (common with webhooks)
+            if (err.name === 'TypeError' || err.message.includes('fetch')) {
+              // Likely CORS on response read — lead was still sent
+              this.step = 11;
+            } else {
+              this.submitError = 'Something went wrong. Please try again or call us directly.';
+            }
+          } finally {
+            this.isSubmitting = false;
+          }
+        },
+
+        resetApp() {
+          this.step = 0;
+          this.isSubmitting = false;
+          this.submitError = '';
+          this.contactErrors = { name: '', phone: '', email: '' };
+          this.formErrors = { target: '' };
+          this.formData = {
+            role: '', cdlAge: 3, type: '',
+            regions: [], lane: '', homeTime: '',
+            target: '', start: ''
+          };
+          this.contactForm = { name: '', phone: '', email: '' };
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
