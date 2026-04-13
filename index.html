@@ -282,13 +282,13 @@
 <body x-data="takeHomeApp()">
 
   <!-- NAV -->
-  <nav class="px-5 py-5 flex justify-between items-center max-w-2xl mx-auto">
-    <div class="text-xl sm:text-2xl font-black tracking-tighter uppercase select-none">
-      SuperTruck<span class="text-sky-400">.ai</span>
+  <nav class="px-5 py-5 flex justify-between items-start max-w-3xl mx-auto">
+    <div class="text-sm font-black tracking-tighter uppercase select-none">
+      <span class="text-xs">A Guaranteed income Program by </span><a class="text-sky-400" href="https://supertruck.ai/" target="_blank">SuperTruck.ai</a>
     </div>
     <div
-      class="text-[10px] sm:text-xs font-bold bg-sky-500/10 text-sky-400 px-3 py-1 rounded-full border border-sky-500/20 uppercase tracking-wide">
-      takehome.supertruck.ai
+      class="text-[10px] sm:text-xs font-bold bg-sky-500/10 text-sky-400 px-3 py-1 rounded-full border border-sky-500/20 uppercase tracking-wide shrink-0">
+      TAKE-HOME
     </div>
   </nav>
 
@@ -309,7 +309,7 @@
       </h1>
 
       <p class="text-slate-400 text-base sm:text-lg mb-8 max-w-md mx-auto leading-relaxed">
-        Tired of dispatchers taking the lion's share? We guarantee a <strong class="text-slate-200">Take-Home
+        Tired of the house taking the lion's share? We guarantee a <strong class="text-slate-200">Take-Home
           Floor</strong>. No BS, no hidden fees.
       </p>
 
@@ -354,12 +354,12 @@
       <p class="text-slate-600 text-xs mt-4">Takes less than 2 minutes · No commitment required</p>
     </div>
 
-    <!-- ── STEPS 1–9 ── -->
-    <div x-show="step > 0 && step < 10" x-cloak class="glass-panel rounded-3xl overflow-hidden">
+    <!-- ── STEPS 1–10 ── -->
+    <div x-show="step > 0 && step < 11" x-cloak class="glass-panel rounded-3xl overflow-hidden">
 
       <!-- Progress bar -->
       <div class="flex gap-1 p-4 pb-0">
-        <template x-for="i in 8">
+        <template x-for="i in 9">
           <div class="progress-bar flex-1"
             :class="step > i ? 'bg-sky-400' : (step === i ? 'bg-sky-500/60' : 'bg-slate-700/60')"></div>
         </template>
@@ -368,7 +368,7 @@
       <!-- Step counter -->
       <div class="text-center pt-3 pb-1">
         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"
-          x-text="step < 9 ? 'Step ' + step + ' of 8' : 'Analyzing...'"></span>
+          x-text="step < 10 ? 'Step ' + step + ' of 9' : 'Analyzing...'"></span>
       </div>
 
       <div class="p-5 sm:p-7 step-content"
@@ -443,17 +443,49 @@
           </button>
         </div>
 
-        <!-- STEP 3: Solo / Team -->
+        <!-- STEP 3: Driving Record -->
         <div x-show="step === 3" class="step-fade">
+          <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">How's your driving record?</h2>
+          <p class="text-slate-500 text-sm text-center mb-6">Be honest — we match you to the right carriers</p>
+          <div class="space-y-3">
+            <button @click="formData.drivingRecord = 'Excellent'; step = 4"
+              class="step-btn w-full p-5 glass-panel rounded-xl font-bold border border-slate-700/50 text-left flex items-center gap-4">
+              <span class="text-2xl">⭐</span>
+              <div>
+                <div class="font-bold text-slate-200">Excellent</div>
+                <div class="text-xs text-slate-500">No violations or accidents</div>
+              </div>
+            </button>
+            <button @click="formData.drivingRecord = 'Good'; step = 4"
+              class="step-btn w-full p-5 glass-panel rounded-xl font-bold border border-slate-700/50 text-left flex items-center gap-4">
+              <span class="text-2xl">👍</span>
+              <div>
+                <div class="font-bold text-slate-200">Good</div>
+                <div class="text-xs text-slate-500">Minor issues, nothing major</div>
+              </div>
+            </button>
+            <button @click="formData.drivingRecord = 'Ok'; step = 4"
+              class="step-btn w-full p-5 glass-panel rounded-xl font-bold border border-slate-700/50 text-left flex items-center gap-4">
+              <span class="text-2xl">🔄</span>
+              <div>
+                <div class="font-bold text-slate-200">Ok</div>
+                <div class="text-xs text-slate-500">Some violations or accidents</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Solo / Team -->
+        <div x-show="step === 4" class="step-fade">
           <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Driving Style?</h2>
           <p class="text-slate-500 text-sm text-center mb-6">How do you prefer to run?</p>
           <div class="grid grid-cols-2 gap-4">
-            <button @click="formData.type = 'Solo'; step = 4"
+            <button @click="formData.type = 'Solo'; step = 5"
               class="step-btn p-8 sm:p-10 glass-panel rounded-2xl font-black text-lg uppercase tracking-widest border border-slate-700/50 text-center">
               <div class="text-3xl mb-2">🚛</div>
               Solo
             </button>
-            <button @click="formData.type = 'Team'; step = 4"
+            <button @click="formData.type = 'Team'; step = 5"
               class="step-btn p-8 sm:p-10 glass-panel rounded-2xl font-black text-lg uppercase tracking-widest border border-slate-700/50 text-center">
               <div class="text-3xl mb-2">👥</div>
               Team
@@ -461,8 +493,8 @@
           </div>
         </div>
 
-        <!-- STEP 4: Regions -->
-        <div x-show="step === 4" class="step-fade">
+        <!-- STEP 5: Regions -->
+        <div x-show="step === 5" class="step-fade">
           <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Preferred Regions?</h2>
           <p class="text-slate-500 text-sm text-center mb-5">Select all that apply</p>
           <div class="grid grid-cols-2 gap-2 mb-6">
@@ -474,7 +506,7 @@
               </div>
             </template>
           </div>
-          <button @click="step = 5"
+          <button @click="step = 6"
             class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition-colors btn-glow"
             :disabled="formData.regions.length === 0"
             :class="formData.regions.length === 0 ? 'opacity-40 cursor-not-allowed' : ''">
@@ -482,14 +514,14 @@
           </button>
         </div>
 
-        <!-- STEP 5: Lane -->
-        <div x-show="step === 5" class="step-fade">
+        <!-- STEP 6: Lane -->
+        <div x-show="step === 6" class="step-fade">
           <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Desired Lane?</h2>
           <p class="text-slate-500 text-sm text-center mb-6">Pick your preferred run type</p>
           <div class="space-y-3">
             <template
               x-for="l in [{id:'Local',desc:'Home every day, city routes'},{id:'Regional',desc:'Out 1–3 days, familiar territory'},{id:'OTR',desc:'Cross-country, max miles & pay'}]">
-              <button @click="formData.lane = l.id; step = 6"
+              <button @click="formData.lane = l.id; step = 7"
                 class="step-btn w-full p-4 glass-panel rounded-xl border border-slate-700/50 text-left flex justify-between items-center">
                 <span class="font-bold text-slate-200" x-text="l.id"></span>
                 <span class="text-xs text-slate-500" x-text="l.desc"></span>
@@ -498,20 +530,20 @@
           </div>
         </div>
 
-        <!-- STEP 6: Home Time -->
-        <div x-show="step === 6" class="step-fade">
+        <!-- STEP 7: Home Time -->
+        <div x-show="step === 7" class="step-fade">
           <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Home Frequency?</h2>
           <p class="text-slate-500 text-sm text-center mb-6">How often do you need to be home?</p>
           <div class="grid grid-cols-2 gap-3">
             <template x-for="h in ['Daily', 'Weekly', 'Bi-Weekly', 'Monthly']">
-              <button @click="formData.homeTime = h; step = 7"
+              <button @click="formData.homeTime = h; step = 8"
                 class="step-btn p-5 glass-panel rounded-xl font-bold border border-slate-700/50" x-text="h"></button>
             </template>
           </div>
         </div>
 
-        <!-- STEP 7: Target -->
-        <div x-show="step === 7" class="step-fade">
+        <!-- STEP 8: Target -->
+        <div x-show="step === 8" class="step-fade">
           <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">Target Take-Home?</h2>
           <p class="text-slate-500 text-sm text-center mb-6">Minimum weekly amount you need in your bank</p>
           <div class="relative max-w-xs mx-auto mb-6">
@@ -535,8 +567,8 @@
           </button>
         </div>
 
-        <!-- STEP 8: Start Date -->
-        <div x-show="step === 8" class="step-fade">
+        <!-- STEP 9: Start Date -->
+        <div x-show="step === 9" class="step-fade">
           <h2 class="text-xl sm:text-2xl font-bold mb-1 heading-font text-center">When can you start?</h2>
           <p class="text-slate-500 text-sm text-center mb-6">Be honest — we'll match the right opportunity</p>
           <div class="space-y-3">
@@ -554,8 +586,8 @@
           </div>
         </div>
 
-        <!-- STEP 9: Analyzing -->
-        <div x-show="step === 9" class="step-fade text-center py-10">
+        <!-- STEP 10: Analyzing -->
+        <div x-show="step === 10" class="step-fade text-center py-10">
           <div class="spinner mx-auto mb-6"></div>
           <h2 class="text-lg font-bold tracking-widest pulse-text text-sky-400 uppercase mb-2">Calculating Your
             Amount...</h2>
@@ -565,7 +597,7 @@
       </div>
 
       <!-- Back button -->
-      <div x-show="step > 1 && step < 9" class="px-5 sm:px-7 pb-5">
+      <div x-show="step > 1 && step < 10" class="px-5 sm:px-7 pb-5">
         <button @click="step--"
           class="text-slate-600 text-sm font-medium hover:text-slate-400 transition-colors flex items-center gap-1">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
@@ -577,8 +609,8 @@
       </div>
     </div>
 
-    <!-- ── STEP 10: RESULTS + CONTACT FORM ── -->
-    <div x-show="step === 10" x-cloak class="step-fade">
+    <!-- ── STEP 11: RESULTS + CONTACT FORM ── -->
+    <div x-show="step === 11" x-cloak class="step-fade">
 
       <!-- Result card -->
       <div class="glass-panel rounded-3xl border-t-4 border-sky-400 overflow-hidden mb-4">
@@ -669,8 +701,8 @@
       </div>
     </div>
 
-    <!-- ── STEP 11: GHL CALENDAR ── -->
-    <template x-if="step === 11">
+    <!-- ── STEP 12: GHL CALENDAR ── -->
+    <template x-if="step === 12">
       <div class="step-fade">
         <div class="glass-panel rounded-3xl overflow-hidden">
           <div class="p-6 sm:p-8 pb-4 text-center">
@@ -692,8 +724,8 @@
           <!-- GHL Calendar Embed -->
           <div class="px-4 pb-6">
             <div class="ghl-calendar-wrapper">
-              <iframe :src="calendarUrl"
-                style="width:100%;border:none;overflow:hidden;min-height:100vh;" scrolling="no">
+              <iframe :src="calendarUrl" style="width:100%;border:none;overflow:hidden;min-height:100vh;"
+                scrolling="no">
               </iframe>
             </div>
           </div>
@@ -721,6 +753,7 @@
         formData: {
           role: '',
           cdlAge: 3,
+          drivingRecord: '',
           type: '',
           regions: [],
           lane: '',
@@ -776,11 +809,11 @@
             return;
           }
           this.formErrors.target = '';
-          this.step = 8;
+          this.step = 9;
         },
 
         runAnalysis() {
-          this.step = 9;
+          this.step = 10;
           const msgs = [
             'Calculating your guaranteed amount...',
             'Matching your profile to open lanes...',
@@ -794,7 +827,7 @@
           }, 500);
           setTimeout(() => {
             clearInterval(interval);
-            this.step = 10;
+            this.step = 11;
           }, 2200);
         },
 
@@ -839,6 +872,7 @@
             customField: {
               role: this.formData.role,
               cdlExperience: this.formData.cdlAge + ' years',
+              drivingRecord: this.formData.drivingRecord,
               drivingType: this.formData.type,
               regions: this.formData.regions.join(', '),
               lane: this.formData.lane,
@@ -863,7 +897,7 @@
 
             // GHL webhooks often return 200 with no body — treat any non-5xx as success
             if (response.ok || response.status === 200) {
-              this.step = 11;
+              this.step = 12;
             } else {
               throw new Error('Server error ' + response.status);
             }
@@ -872,7 +906,7 @@
             // but browser blocks the response read (common with webhooks)
             if (err.name === 'TypeError' || err.message.includes('fetch')) {
               // Likely CORS on response read — lead was still sent
-              this.step = 11;
+              this.step = 12;
             } else {
               this.submitError = 'Something went wrong. Please try again or call us directly.';
             }
@@ -888,7 +922,7 @@
           this.contactErrors = { name: '', phone: '', email: '' };
           this.formErrors = { target: '' };
           this.formData = {
-            role: '', cdlAge: 3, type: '',
+            role: '', cdlAge: 3, drivingRecord: '', type: '',
             regions: [], lane: '', homeTime: '',
             target: '', start: ''
           };
