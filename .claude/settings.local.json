@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Read(//e/tmp/**)",
+      "Bash(npm install:*)",
+      "Read(//c/Users/User/node_modules/pdf-parse/**)",
+      "Read(//c/Users/User/node_modules/pdf-parse//**)",
+      "Bash(npm run:*)",
+      "Bash(pnpm add:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next:*)",
+      "Bash(curl -s http://localhost:3000)"
+    ]
+  }
+}
