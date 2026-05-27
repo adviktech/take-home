@@ -10,7 +10,10 @@
       "Bash(pnpm add:*)",
       "Bash(npx tsc:*)",
       "Bash(npx next:*)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(pnpm run:*)",
+      "Bash(kill %1)",
+      "Bash(wait)"
     ]
   }
 }

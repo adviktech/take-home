@@ -5,19 +5,21 @@ import Stats from "@/components/Stats";
 import TakeHomeCalculator from "@/components/TakeHomeCalculator";
 import HowItWorks from "@/components/HowItWorks";
 import IoTStack from "@/components/IoTStack";
+import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-fleet-bg">
+    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
       <Navbar />
       <Hero />
       <TrustStrip />
       <Stats />
       <TakeHomeCalculator />
       <HowItWorks />
+      <Services />
       <IoTStack />
       <Testimonials />
       <CTASection />
