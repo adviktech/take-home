@@ -2,6 +2,24 @@
 
 import { motion } from "framer-motion";
 
+function AnimatedArrow({ delay = 0 }: { delay?: number }) {
+  return (
+    <svg width="48" height="24" viewBox="0 0 48 24" className="flex-shrink-0" style={{ overflow: "visible" }}>
+      <line x1="2" y1="12" x2="40" y2="12" stroke="var(--border)" strokeWidth="1.5" strokeDasharray="4 3" />
+      <path d="M35 7 L42 12 L35 17" stroke="var(--border)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      {[delay, delay + 0.75].map((d, i) => (
+        <motion.g
+          key={i}
+          animate={{ x: [0, 38], opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.5, delay: d, repeat: Infinity, ease: "linear", repeatDelay: 0.1 }}
+        >
+          <circle cx={2} cy={12} r={3} fill="var(--accent)" />
+        </motion.g>
+      ))}
+    </svg>
+  );
+}
+
 const hardware = [
   { title: "ELD & GPS", subtitle: "HOS & Asset Tracking", tag: "HOS Compliance", description: "Electronic Logging Devices and GPS units sync with Supertruck OS to automate Hours of Service compliance and provide real-time asset location data across your entire fleet.", features: ["Automated HOS logging", "Real-time asset tracking", "FMCSA compliance alerts", "Route optimization data"] },
   { title: "AI Dashcams", subtitle: "Safety Monitoring", tag: "Safety Score", description: "Computer vision dashcams detect unsafe driving events in real-time, feeding data directly into FleetWatch and triggering dynamic insurance premium adjustments.", features: ["Forward + cab-facing video", "AI event detection", "Insurance premium reduction", "Driver coaching alerts"] },
@@ -50,12 +68,23 @@ export default function IoTStack() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 flex items-center justify-center gap-4">
-          {["ELD Data", "→", "Supertruck OS", "→", "Automated Action"].map((item, i) => (
-            <span key={i} className="font-outfit text-sm font-medium" style={{ color: item === "→" ? "var(--border)" : i === 2 ? "var(--accent)" : "var(--text-muted)", fontWeight: i === 2 ? 700 : 500 }}>
-              {item}
-            </span>
-          ))}
+          className="mt-12 flex items-center justify-center gap-2 flex-wrap">
+          {[
+            { type: "node" as const, text: "ELD Data", accent: false },
+            { type: "arrow" as const, delay: 0 },
+            { type: "node" as const, text: "Supertruck OS", accent: true },
+            { type: "arrow" as const, delay: 0.35 },
+            { type: "node" as const, text: "Automated Action", accent: false },
+          ].map((item, i) =>
+            item.type === "node" ? (
+              <span key={i} className="font-outfit text-sm font-medium"
+                style={{ color: item.accent ? "var(--accent)" : "var(--text-muted)", fontWeight: item.accent ? 700 : 500 }}>
+                {item.text}
+              </span>
+            ) : (
+              <AnimatedArrow key={i} delay={item.delay} />
+            )
+          )}
         </motion.div>
       </div>
     </section>

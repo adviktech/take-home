@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Confetti from "@/components/Confetti";
 
 interface FormData {
   role: string; cdlAge: number; drivingRecord: string; type: string;
@@ -273,6 +274,7 @@ export default function TakeHomeCalculator() {
   const [analysisPhase, setAnalysisPhase] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitErr, setSubmitErr] = useState("");
+  const [confettiActive, setConfettiActive] = useState(false);
   const amountRef = useRef<HTMLSpanElement>(null);
 
   function go(n: number) { setStep(n); }
@@ -280,7 +282,12 @@ export default function TakeHomeCalculator() {
   function patchContact(p: Partial<ContactForm>) { setContact(prev => ({ ...prev, ...p })); }
 
   useEffect(() => { if (step >= 1 && step <= 9) setTimeout(() => animeStagger(".calc-opt"), 80); }, [step]);
-  useEffect(() => { if (step === 11 && amountRef.current) animeCountUp(amountRef.current, calcGuaranteed(formData)); }, [step]); // eslint-disable-line
+  useEffect(() => {
+    if (step === 11 && amountRef.current) {
+      animeCountUp(amountRef.current, calcGuaranteed(formData));
+      setConfettiActive(true);
+    }
+  }, [step]); // eslint-disable-line
 
   function runAnalysis(start: string) {
     patch({ start }); go(10);
@@ -720,7 +727,8 @@ export default function TakeHomeCalculator() {
         {/* Step 11: Results + Contact */}
         {step === 11 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-2xl">
+            className="relative w-full max-w-2xl">
+            <Confetti active={confettiActive} />
             {/* Colored top bar — separate so overflow-hidden on card isn't needed */}
             <div className="rounded-t-3xl h-1" style={{ background: "var(--accent)" }} />
             <div className="rounded-b-3xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)", borderTop: "none" }}>

@@ -179,26 +179,30 @@ export default function Hero() {
               Powered by Supertruck.ai
             </motion.div>
 
-            {/* Headline — two lines, overflow-hidden clip reveal */}
-            <h1 className="font-montserrat font-black leading-[0.9] mb-6">
-              <div className="overflow-hidden">
+            {/* Headline — per-word overflow-hidden clip reveal (avoids horizontal clipping on large screens) */}
+            <h1 className="font-montserrat font-black leading-[1.05] mb-6">
+              <div>
                 {LINE1.map((word, i) => (
-                  <motion.span key={word + i} className="inline-block mr-[0.2em]"
-                    style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--text-muted)" }}
-                    initial={{ y: "110%" }} animate={{ y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}>
-                    {word}
-                  </motion.span>
+                  <span key={word + i} className="inline-block overflow-hidden align-bottom mr-[0.2em]">
+                    <motion.span className="inline-block"
+                      style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--text-muted)" }}
+                      initial={{ y: "110%" }} animate={{ y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.2 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}>
+                      {word}
+                    </motion.span>
+                  </span>
                 ))}
               </div>
-              <div className="overflow-hidden">
+              <div>
                 {LINE2.map((word, i) => (
-                  <motion.span key={word + i} className="inline-block mr-[0.2em]"
-                    style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--accent)" }}
-                    initial={{ y: "110%" }} animate={{ y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.4 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}>
-                    {word}
-                  </motion.span>
+                  <span key={word + i} className="inline-block overflow-hidden align-bottom mr-[0.2em]">
+                    <motion.span className="inline-block"
+                      style={{ fontSize: "clamp(3rem, 7vw, 6rem)", color: "var(--accent)" }}
+                      initial={{ y: "110%" }} animate={{ y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.4 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}>
+                      {word}
+                    </motion.span>
+                  </span>
                 ))}
               </div>
             </h1>
