@@ -19,7 +19,7 @@ export default function TrustStrip() {
         <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: "linear-gradient(270deg, var(--bg-alt), transparent)" }} />
         <div className="marquee-track inline-flex gap-10">
           {[...fleetNames, ...fleetNames, ...fleetNames].map((name, i) => (
-            <span key={`${name}-${i}`} className="font-montserrat font-semibold text-base" style={{ color: "var(--border)", letterSpacing: "0.05em" }}>
+            <span key={`${name}-${i}`} className="font-montserrat font-semibold text-base" style={{ color: "var(--text-muted)", letterSpacing: "0.05em" }}>
               {name} <span style={{ color: "var(--accent)", marginLeft: 4, marginRight: 4 }}>·</span>
             </span>
           ))}

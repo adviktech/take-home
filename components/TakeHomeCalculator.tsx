@@ -263,6 +263,205 @@ function InputField({ type, value, onChange, placeholder, autoComplete, error }:
   );
 }
 
+// ── Right-panel context components ──────────────────────────
+
+/** Step 0 — shows how FourFleet's model produces more driver earnings */
+function GuaranteeArchPanel() {
+  return (
+    <div className="space-y-4">
+      {/* Old-world flow */}
+      <div className="rounded-2xl p-5" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+        <div className="font-outfit text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: "var(--text-faint)" }}>
+          Traditional Trucking Model
+        </div>
+        <div className="flex items-center gap-2 mb-3">
+          <div className="rounded-lg px-3 py-2 font-montserrat font-black text-sm" style={{ background: "var(--bg-alt)", color: "var(--text)" }}>$5,000 gross</div>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style={{ color: "var(--text-faint)", flexShrink: 0 }}><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <div className="flex-1 space-y-1.5">
+            {[
+              { label: "Broker cut", val: "−15%" },
+              { label: "Dispatcher markup", val: "−20%" },
+              { label: "Compliance/fees", val: "−5%" },
+            ].map(({ label, val }) => (
+              <div key={label} className="flex justify-between items-center px-2.5 py-1 rounded-lg text-xs"
+                style={{ background: "rgba(239,68,68,0.07)", border: "1px solid rgba(239,68,68,0.15)" }}>
+                <span className="font-outfit" style={{ color: "var(--text-muted)" }}>{label}</span>
+                <span className="font-montserrat font-black" style={{ color: "#ef4444" }}>{val}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center justify-between px-3 py-2 rounded-xl"
+          style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)" }}>
+          <span className="font-outfit text-xs" style={{ color: "var(--text-muted)" }}>Driver takes home</span>
+          <span className="font-montserrat font-black" style={{ color: "#ef4444" }}>~$3,000</span>
+        </div>
+      </div>
+
+      {/* FourFleet flow */}
+      <div className="rounded-2xl p-5" style={{ background: "var(--accent-light)", border: "1px solid var(--accent)" }}>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="font-outfit text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--accent)" }}>FourFleet Model</span>
+          <span className="px-2 py-0.5 rounded-full font-outfit text-[9px] font-bold uppercase" style={{ background: "var(--accent)", color: "var(--bg)" }}>Guaranteed</span>
+        </div>
+        <div className="space-y-1.5 mb-3">
+          {[
+            { label: "Direct carrier access", val: "$0 broker" },
+            { label: "No dispatcher markup", val: "$0 cut" },
+            { label: "Compliance included", val: "$0 fees" },
+          ].map(({ label, val }) => (
+            <div key={label} className="flex justify-between items-center px-2.5 py-1 rounded-lg text-xs"
+              style={{ background: "var(--bg-card)" }}>
+              <span className="flex items-center gap-1.5 font-outfit" style={{ color: "var(--text-muted)" }}>
+                <svg width="10" height="10" fill="none" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                {label}
+              </span>
+              <span className="font-montserrat font-black" style={{ color: "var(--accent)" }}>{val}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl"
+          style={{ background: "var(--bg-card)", border: "1px solid var(--accent)" }}>
+          <span className="font-outfit text-xs" style={{ color: "var(--text-muted)" }}>Your guaranteed floor</span>
+          <span className="font-montserrat font-black text-lg" style={{ color: "var(--accent)" }}>$3,400+/wk</span>
+        </div>
+      </div>
+
+      {/* Trust badges */}
+      <div className="grid grid-cols-2 gap-2">
+        {[
+          { icon: "🛡️", label: "Contract-Backed", sub: "Written guarantee" },
+          { icon: "🚫", label: "No Forced Dispatch", sub: "You approve loads" },
+          { icon: "📋", label: "FMCSA Compliant", sub: "Fully registered" },
+          { icon: "🔒", label: "No Hidden Fees", sub: "Ever" },
+        ].map(({ icon, label, sub }) => (
+          <div key={label} className="rounded-xl p-3" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+            <div className="text-lg mb-1">{icon}</div>
+            <div className="font-montserrat font-bold text-xs" style={{ color: "var(--text)" }}>{label}</div>
+            <div className="font-outfit text-[10px]" style={{ color: "var(--text-faint)" }}>{sub}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Step 11 — Guarantee protections + privacy pledge */
+function GuaranteeProtectionsPanel() {
+  return (
+    <div className="space-y-4 lg:sticky lg:top-24">
+      <div className="rounded-2xl overflow-hidden" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+        <div className="px-5 py-4" style={{ background: "var(--accent)", }}>
+          <div className="font-montserrat font-black text-white text-sm">What Your Guarantee Includes</div>
+          <div className="font-outfit text-xs text-white opacity-75 mt-0.5">Contractual protections in your offer letter</div>
+        </div>
+        <div className="divide-y" style={{ borderColor: "var(--border)" }}>
+          {[
+            { icon: "📄", title: "Contractually Backed", desc: "Your floor is written into your offer — not a verbal promise." },
+            { icon: "🚫", title: "No Forced Dispatch", desc: "You review and approve every single load before accepting." },
+            { icon: "🔄", title: "Bi-Weekly Floor Review", desc: "Your floor is adjusted to live market rates every two weeks." },
+            { icon: "📊", title: "Full Earnings Transparency", desc: "See every line item: gross, deductions, your net." },
+          ].map(({ icon, title, desc }) => (
+            <div key={title} className="flex gap-3 px-5 py-4">
+              <span className="text-xl flex-shrink-0 mt-0.5">{icon}</span>
+              <div>
+                <div className="font-montserrat font-bold text-sm" style={{ color: "var(--text)" }}>{title}</div>
+                <div className="font-outfit text-xs leading-relaxed mt-0.5" style={{ color: "var(--text-muted)" }}>{desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Privacy pledge */}
+      <div className="rounded-2xl p-5" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-lg">🔒</span>
+          <div className="font-montserrat font-black text-sm" style={{ color: "var(--text)" }}>Privacy & Direct-Line Pledge</div>
+        </div>
+        <ul className="space-y-2">
+          {[
+            "One call from one dedicated manager — not a recruiter farm.",
+            "Your info is never sold, never shared, never spammed.",
+            "Unsubscribe at any time with a single reply.",
+          ].map(item => (
+            <li key={item} className="flex gap-2 text-xs font-outfit" style={{ color: "var(--text-muted)" }}>
+              <svg width="14" height="14" fill="none" viewBox="0 0 14 14" className="flex-shrink-0 mt-0.5"><path d="M2 7l3.5 3.5L12 3" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+/** Step 12 — Pre-call checklist + call agenda */
+function PreCallPanel({ amount }: { amount: number }) {
+  return (
+    <div className="space-y-4 lg:sticky lg:top-24">
+      <div className="rounded-2xl overflow-hidden" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+        <div className="px-5 py-4" style={{ borderBottom: "1px solid var(--border)" }}>
+          <div className="font-montserrat font-black text-sm" style={{ color: "var(--text)" }}>Prepare for Your Call</div>
+          <div className="font-outfit text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>Have these ready — takes 2 min to gather</div>
+        </div>
+        <div className="p-4 space-y-2">
+          {[
+            "Current pay stub or last 2 weeks' settlement",
+            "CDL number + expiration date",
+            "Medical card number",
+            "Preferred start window",
+            "Equipment details (if Owner Operator)",
+          ].map((item, i) => (
+            <div key={item} className="flex items-start gap-3 px-3 py-2.5 rounded-xl"
+              style={{ background: "var(--bg-alt)", border: "1px solid var(--border)" }}>
+              <div className="w-5 h-5 rounded flex-shrink-0 flex items-center justify-center mt-0.5"
+                style={{ background: "var(--accent-light)", border: "1px solid var(--accent)" }}>
+                <span className="font-montserrat font-black text-[10px]" style={{ color: "var(--accent)" }}>{i + 1}</span>
+              </div>
+              <span className="font-outfit text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Call agenda */}
+      <div className="rounded-2xl p-5" style={{ background: "var(--accent-light)", border: "1px solid var(--accent)" }}>
+        <div className="font-montserrat font-black text-sm mb-3" style={{ color: "var(--accent)" }}>On the Call You&apos;ll Cover</div>
+        <ul className="space-y-2 mb-4">
+          {[
+            `Confirm your $${amount.toLocaleString()}+ floor`,
+            "Lane matching & load preferences",
+            "Equipment fit & onboarding timeline",
+            "First-week dispatch logistics",
+          ].map(item => (
+            <li key={item} className="flex gap-2 text-xs font-outfit" style={{ color: "var(--text)" }}>
+              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" className="flex-shrink-0 mt-0.5"><path d="M2 6l3 3 5-5" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center gap-4 pt-3" style={{ borderTop: "1px solid var(--accent)" }}>
+          <div className="text-center">
+            <div className="font-montserrat font-black text-xl" style={{ color: "var(--accent)" }}>20–30</div>
+            <div className="font-outfit text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>minutes</div>
+          </div>
+          <div className="w-px h-8" style={{ background: "var(--accent)", opacity: 0.3 }} />
+          <div className="text-center">
+            <div className="font-montserrat font-black text-xl" style={{ color: "var(--accent)" }}>1</div>
+            <div className="font-outfit text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>manager</div>
+          </div>
+          <div className="w-px h-8" style={{ background: "var(--accent)", opacity: 0.3 }} />
+          <div className="text-center">
+            <div className="font-montserrat font-black text-xl" style={{ color: "var(--accent)" }}>$0</div>
+            <div className="font-outfit text-[10px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>obligation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main component ───────────────────────────────────────────
 
 export default function TakeHomeCalculator() {
@@ -577,10 +776,12 @@ export default function TakeHomeCalculator() {
           </p>
         </motion.div>
 
-        {/* Step 0: Intro — centered, wide */}
+        {/* Step 0: Intro — two column on desktop */}
         {step === 0 && (
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-lg">
+            className="w-full">
+            <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <div> {/* left card wrapper */}
             <div className="rounded-3xl p-8 sm:p-10 text-center" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 font-outfit text-xs font-bold uppercase tracking-widest"
                 style={{ background: "var(--accent-light)", color: "var(--accent)", border: "1px solid var(--accent)" }}>
@@ -609,6 +810,9 @@ export default function TakeHomeCalculator() {
               </button>
               <p className="font-outfit text-xs mt-3" style={{ color: "var(--text-faint)" }}>Takes less than 2 minutes · No commitment required</p>
             </div>
+            </div> {/* end left card wrapper */}
+            <GuaranteeArchPanel />
+            </div> {/* end grid */}
           </motion.div>
         )}
 
@@ -727,7 +931,9 @@ export default function TakeHomeCalculator() {
         {/* Step 11: Results + Contact */}
         {step === 11 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-2xl">
+            className="relative w-full">
+            <div className="grid lg:grid-cols-[3fr_2fr] gap-6 items-start">
+            <div className="relative"> {/* left results wrapper */}
             <Confetti active={confettiActive} />
             {/* Colored top bar — separate so overflow-hidden on card isn't needed */}
             <div className="rounded-t-3xl h-1" style={{ background: "var(--accent)" }} />
@@ -795,13 +1001,18 @@ export default function TakeHomeCalculator() {
                 </div>
               </div>
             </div>
+            </div> {/* end left results wrapper */}
+            <GuaranteeProtectionsPanel />
+            </div> {/* end grid */}
           </motion.div>
         )}
 
         {/* Step 12: Calendar */}
         {step === 12 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}
-            className="w-full max-w-2xl ">
+            className="w-full">
+            <div className="grid lg:grid-cols-[3fr_2fr] gap-6 items-start">
+            <div> {/* left calendar wrapper */}
             <div className="rounded-3xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
               <div className="p-6 sm:p-8 pb-4">
                 <div className="flex items-start justify-between gap-4 mb-4">
@@ -833,6 +1044,9 @@ export default function TakeHomeCalculator() {
                 </div>
               </div>
             </div>
+            </div> {/* end left calendar wrapper */}
+            <PreCallPanel amount={amount} />
+            </div> {/* end grid */}
           </motion.div>
         )}
 

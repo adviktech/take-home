@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { PALETTES, usePalette } from "./ThemeProvider";
+import { PALETTES, FONT_PAIRS, usePalette } from "./ThemeProvider";
 
 function PaletteIcon() {
   return (
@@ -27,8 +27,9 @@ function CheckIcon() {
 }
 
 export default function PaletteSelector() {
-  const { paletteId, palette, setPaletteId } = usePalette();
+  const { paletteId, palette, setPaletteId, fontPairId, fontPair, setFontPairId } = usePalette();
   const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState<"color" | "font">("color");
   const ref = useRef<HTMLDivElement>(null);
 
   // Close on outside click
@@ -98,12 +99,11 @@ export default function PaletteSelector() {
               zIndex: 200,
             }}
           >
-            {/* Header */}
-            <div className="px-4 pt-4 pb-3" style={{ borderBottom: "1px solid var(--border)" }}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-montserrat font-black text-sm" style={{ color: "var(--text)" }}>Color Palette</div>
-                  <div className="font-outfit text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>20 palettes · click to preview instantly</div>
+            {/* Header + tabs */}
+            <div className="px-4 pt-4 pb-0" style={{ borderBottom: "1px solid var(--border)" }}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="font-montserrat font-black text-sm" style={{ color: "var(--text)" }}>
+                  {tab === "color" ? "Color Palette" : "Typography"}
                 </div>
                 <button onClick={() => setOpen(false)}
                   className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
@@ -113,49 +113,131 @@ export default function PaletteSelector() {
                   <svg width="12" height="12" fill="none" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2L2 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
                 </button>
               </div>
+              {/* Tab strip */}
+              <div className="flex gap-1 -mb-px">
+                {(["color", "font"] as const).map(t => (
+                  <button
+                    key={t}
+                    onClick={() => setTab(t)}
+                    className="px-3 py-2 font-outfit text-xs font-semibold rounded-t-lg transition-colors duration-150"
+                    style={{
+                      borderBottom: t === tab ? "2px solid var(--accent)" : "2px solid transparent",
+                      color: t === tab ? "var(--accent)" : "var(--text-faint)",
+                    }}
+                  >
+                    {t === "color" ? "🎨 Colors" : "Aa Fonts"}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="p-3 overflow-y-auto" style={{ maxHeight: "70vh" }}>
-              {/* Light palettes */}
-              <div className="mb-3">
-                <div className="font-outfit text-[10px] font-bold uppercase tracking-widest px-1 mb-2" style={{ color: "var(--text-faint)" }}>
-                  ☀ Light Palettes
-                </div>
-                <div className="grid grid-cols-5 gap-1.5">
-                  {lightPalettes.map(p => (
-                    <PaletteSwatch key={p.id} p={p} selected={paletteId === p.id} onSelect={() => { setPaletteId(p.id); }} />
+            <div className="p-3 overflow-y-auto" style={{ maxHeight: "68vh" }}>
+              {tab === "color" ? (
+                <>
+                  {/* Light palettes */}
+                  <div className="mb-3">
+                    <div className="font-outfit text-[10px] font-bold uppercase tracking-widest px-1 mb-2" style={{ color: "var(--text-faint)" }}>
+                      ☀ Light Palettes
+                    </div>
+                    <div className="grid grid-cols-5 gap-1.5">
+                      {lightPalettes.map(p => (
+                        <PaletteSwatch key={p.id} p={p} selected={paletteId === p.id} onSelect={() => { setPaletteId(p.id); }} />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Dark palettes */}
+                  <div>
+                    <div className="font-outfit text-[10px] font-bold uppercase tracking-widest px-1 mb-2" style={{ color: "var(--text-faint)" }}>
+                      ☾ Dark Palettes
+                    </div>
+                    <div className="grid grid-cols-5 gap-1.5">
+                      {darkPalettes.map(p => (
+                        <PaletteSwatch key={p.id} p={p} selected={paletteId === p.id} onSelect={() => { setPaletteId(p.id); }} />
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                /* Font pairs grid */
+                <div className="grid grid-cols-2 gap-2">
+                  {FONT_PAIRS.map(f => (
+                    <FontCard key={f.id} f={f} selected={fontPairId === f.id} onSelect={() => setFontPairId(f.id)} />
                   ))}
                 </div>
-              </div>
-
-              {/* Dark palettes */}
-              <div>
-                <div className="font-outfit text-[10px] font-bold uppercase tracking-widest px-1 mb-2" style={{ color: "var(--text-faint)" }}>
-                  ☾ Dark Palettes
-                </div>
-                <div className="grid grid-cols-5 gap-1.5">
-                  {darkPalettes.map(p => (
-                    <PaletteSwatch key={p.id} p={p} selected={paletteId === p.id} onSelect={() => { setPaletteId(p.id); }} />
-                  ))}
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Footer */}
             <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: "1px solid var(--border)" }}>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full" style={{ background: palette.vars["--accent"] }} />
-                <span className="font-montserrat font-bold text-xs" style={{ color: "var(--text)" }}>{palette.name}</span>
-                <span className="font-outfit text-[10px]" style={{ color: "var(--text-faint)" }}>· {palette.description}</span>
-              </div>
-              <span className="font-outfit text-[10px] px-2 py-0.5 rounded-full" style={{ background: palette.dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: "var(--text-muted)" }}>
-                {palette.dark ? "Dark" : "Light"}
-              </span>
+              {tab === "color" ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full" style={{ background: palette.vars["--accent"] }} />
+                    <span className="font-montserrat font-bold text-xs" style={{ color: "var(--text)" }}>{palette.name}</span>
+                    <span className="font-outfit text-[10px]" style={{ color: "var(--text-faint)" }}>· {palette.description}</span>
+                  </div>
+                  <span className="font-outfit text-[10px] px-2 py-0.5 rounded-full" style={{ background: palette.dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: "var(--text-muted)" }}>
+                    {palette.dark ? "Dark" : "Light"}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="font-montserrat font-bold text-xs" style={{ color: "var(--text)" }}>{fontPair.name}</span>
+                    <span className="font-outfit text-[10px]" style={{ color: "var(--text-faint)" }}>· {fontPair.description}</span>
+                  </div>
+                  <span className="font-outfit text-[10px] px-2 py-0.5 rounded-full" style={{ background: "rgba(0,0,0,0.05)", color: "var(--text-muted)" }}>
+                    {FONT_PAIRS.length} options
+                  </span>
+                </>
+              )}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+function FontCard({ f, selected, onSelect }: { f: (typeof FONT_PAIRS)[0]; selected: boolean; onSelect: () => void }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <button
+      onClick={onSelect}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative w-full text-left p-3 rounded-xl transition-all duration-150"
+      style={{
+        background: selected ? "var(--accent-light)" : hovered ? "var(--bg-alt)" : "var(--bg-card)",
+        border: selected ? "1.5px solid var(--accent)" : `1px solid var(--border-card)`,
+        outline: "none",
+      }}
+    >
+      {/* Font name rendered in that font (loaded lazily via the apply mechanism) */}
+      <div
+        className="font-black text-sm leading-tight mb-0.5 truncate"
+        style={{
+          fontFamily: f.heading || "var(--font-montserrat)",
+          color: selected ? "var(--accent)" : "var(--text)",
+        }}
+      >
+        {f.name}
+      </div>
+      <div
+        className="text-[10px] truncate"
+        style={{
+          fontFamily: f.body || "var(--font-outfit)",
+          color: "var(--text-faint)",
+        }}
+      >
+        {f.description}
+      </div>
+      {selected && (
+        <span className="absolute top-2 right-2 w-4 h-4 rounded-full flex items-center justify-center" style={{ background: "var(--accent)" }}>
+          <CheckIcon />
+        </span>
+      )}
+    </button>
   );
 }
 

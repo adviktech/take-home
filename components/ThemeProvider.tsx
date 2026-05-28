@@ -289,6 +289,61 @@ export const PALETTES: Palette[] = [
 
 export const DEFAULT_PALETTE_ID = "amber-road";
 
+// ── Font pairs ──────────────────────────────────────────────────────────────
+export interface FontPair {
+  id: string;
+  name: string;
+  description: string;
+  heading: string;         // CSS font-family value for headings (empty = keep default)
+  body: string;            // CSS font-family value for body (empty = keep default)
+  googleFamilies: string[]; // URL-encoded family strings for Google Fonts
+}
+
+export const FONT_PAIRS: FontPair[] = [
+  { id: "default",        name: "Original",           description: "Montserrat + Outfit",           heading: "",                         body: "",                       googleFamilies: [] },
+  { id: "space-inter",    name: "Space Modern",        description: "Space Grotesk + Inter",         heading: "Space Grotesk",            body: "Inter",                  googleFamilies: ["Space+Grotesk:wght@400;500;600;700;800", "Inter:wght@400;500;600"] },
+  { id: "bebas-dm",       name: "Haul Bold",           description: "Bebas Neue + DM Sans",          heading: "Bebas Neue",               body: "DM Sans",                googleFamilies: ["Bebas+Neue", "DM+Sans:wght@400;500;600"] },
+  { id: "syne-manrope",   name: "Editorial",           description: "Syne + Manrope",                heading: "Syne",                     body: "Manrope",                googleFamilies: ["Syne:wght@400;600;700;800", "Manrope:wght@400;500;600"] },
+  { id: "raleway-nunito", name: "Elegant Route",       description: "Raleway + Nunito",              heading: "Raleway",                  body: "Nunito",                 googleFamilies: ["Raleway:wght@400;600;700;800;900", "Nunito:wght@400;500;600"] },
+  { id: "jakarta-source", name: "Clean Pro",           description: "Plus Jakarta Sans + Source Sans",heading: "Plus Jakarta Sans",        body: "Source Sans 3",          googleFamilies: ["Plus+Jakarta+Sans:wght@400;500;600;700;800", "Source+Sans+3:wght@400;500;600"] },
+  { id: "barlow",         name: "Road Condensed",      description: "Barlow Condensed + Barlow",     heading: "Barlow Condensed",         body: "Barlow",                 googleFamilies: ["Barlow+Condensed:wght@400;600;700;800;900", "Barlow:wght@400;500;600"] },
+  { id: "josefin",        name: "Josefin",             description: "Josefin Sans — heading + body", heading: "Josefin Sans",             body: "Josefin Sans",           googleFamilies: ["Josefin+Sans:wght@400;600;700"] },
+  { id: "urbanist",       name: "Urbanist",            description: "Urbanist — heading + body",     heading: "Urbanist",                 body: "Urbanist",               googleFamilies: ["Urbanist:wght@400;500;600;700;800;900"] },
+  { id: "work-sans",      name: "Work Sans",           description: "Work Sans — heading + body",    heading: "Work Sans",                body: "Work Sans",              googleFamilies: ["Work+Sans:wght@400;500;600;700;800;900"] },
+  { id: "ibm-plex",       name: "Fleet Tech",          description: "IBM Plex Sans + IBM Plex Mono", heading: "IBM Plex Sans",            body: "IBM Plex Mono",          googleFamilies: ["IBM+Plex+Sans:wght@400;500;600;700", "IBM+Plex+Mono:wght@400;500;600"] },
+  { id: "poppins",        name: "Poppins",             description: "Poppins — heading + body",      heading: "Poppins",                  body: "Poppins",                googleFamilies: ["Poppins:wght@400;500;600;700;800;900"] },
+  { id: "oswald-open",    name: "Highway",             description: "Oswald + Open Sans",            heading: "Oswald",                   body: "Open Sans",              googleFamilies: ["Oswald:wght@400;500;600;700", "Open+Sans:wght@400;500;600"] },
+  { id: "exo2",           name: "Exo 2",               description: "Exo 2 — heading + body",        heading: "Exo 2",                    body: "Exo 2",                  googleFamilies: ["Exo+2:wght@400;500;600;700;800;900"] },
+  { id: "anton-roboto",   name: "Impact Haul",         description: "Anton + Roboto",                heading: "Anton",                    body: "Roboto",                 googleFamilies: ["Anton", "Roboto:wght@400;500;600"] },
+  { id: "big-shoulders",  name: "Big Shoulders",       description: "Big Shoulders Display + Text",  heading: "Big Shoulders Display",    body: "Big Shoulders Text",     googleFamilies: ["Big+Shoulders+Display:wght@400;600;700;800;900", "Big+Shoulders+Text:wght@400;500;600"] },
+  { id: "unbounded",      name: "Unbounded",           description: "Unbounded + Nunito Sans",        heading: "Unbounded",                body: "Nunito Sans",            googleFamilies: ["Unbounded:wght@400;600;700;800;900", "Nunito+Sans:wght@400;500;600"] },
+  { id: "chakra",         name: "Cyber Freight",       description: "Chakra Petch — heading + body", heading: "Chakra Petch",             body: "Chakra Petch",           googleFamilies: ["Chakra+Petch:wght@400;500;600;700"] },
+];
+
+export const DEFAULT_FONT_PAIR_ID = "default";
+
+function applyFont(pair: FontPair) {
+  if (typeof document === "undefined") return;
+  if (!pair.heading) {
+    // Restore Next.js font variables
+    document.documentElement.style.removeProperty("--font-montserrat");
+    document.documentElement.style.removeProperty("--font-outfit");
+    return;
+  }
+  // Load Google Fonts once
+  const linkId = `gfont-${pair.id}`;
+  if (!document.getElementById(linkId)) {
+    const link = document.createElement("link");
+    link.id = linkId;
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${pair.googleFamilies.join("&family=")}&display=swap`;
+    document.head.appendChild(link);
+  }
+  // Override CSS custom properties (inline style = highest specificity)
+  document.documentElement.style.setProperty("--font-montserrat", `'${pair.heading}', sans-serif`);
+  document.documentElement.style.setProperty("--font-outfit", `'${pair.body}', sans-serif`);
+}
+
 function applyPalette(palette: Palette) {
   const root = document.documentElement;
   (Object.entries(palette.vars) as [string, string][]).forEach(([key, value]) => {
@@ -301,24 +356,38 @@ interface PaletteCtxType {
   paletteId: string;
   palette: Palette;
   setPaletteId: (id: string) => void;
+  fontPairId: string;
+  fontPair: FontPair;
+  setFontPairId: (id: string) => void;
 }
 
 const defaultPalette = PALETTES.find(p => p.id === DEFAULT_PALETTE_ID)!;
+const defaultFontPair = FONT_PAIRS.find(f => f.id === DEFAULT_FONT_PAIR_ID)!;
 const PaletteCtx = createContext<PaletteCtxType>({
   paletteId: DEFAULT_PALETTE_ID,
   palette: defaultPalette,
   setPaletteId: () => {},
+  fontPairId: DEFAULT_FONT_PAIR_ID,
+  fontPair: defaultFontPair,
+  setFontPairId: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [paletteId, setPaletteIdState] = useState(DEFAULT_PALETTE_ID);
+  const [fontPairId, setFontPairIdState] = useState(DEFAULT_FONT_PAIR_ID);
 
   useEffect(() => {
-    const stored = localStorage.getItem("paletteId");
-    const id = stored && PALETTES.find(p => p.id === stored) ? stored : DEFAULT_PALETTE_ID;
-    const palette = PALETTES.find(p => p.id === id)!;
-    setPaletteIdState(id);
+    const storedPalette = localStorage.getItem("paletteId");
+    const pid = storedPalette && PALETTES.find(p => p.id === storedPalette) ? storedPalette : DEFAULT_PALETTE_ID;
+    const palette = PALETTES.find(p => p.id === pid)!;
+    setPaletteIdState(pid);
     applyPalette(palette);
+
+    const storedFont = localStorage.getItem("fontPairId");
+    const fid = storedFont && FONT_PAIRS.find(f => f.id === storedFont) ? storedFont : DEFAULT_FONT_PAIR_ID;
+    const fontPair = FONT_PAIRS.find(f => f.id === fid)!;
+    setFontPairIdState(fid);
+    applyFont(fontPair);
   }, []);
 
   function setPaletteId(id: string) {
@@ -329,10 +398,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyPalette(palette);
   }
 
+  function setFontPairId(id: string) {
+    const pair = FONT_PAIRS.find(f => f.id === id);
+    if (!pair) return;
+    setFontPairIdState(id);
+    localStorage.setItem("fontPairId", id);
+    applyFont(pair);
+  }
+
   const palette = PALETTES.find(p => p.id === paletteId) ?? defaultPalette;
+  const fontPair = FONT_PAIRS.find(f => f.id === fontPairId) ?? defaultFontPair;
 
   return (
-    <PaletteCtx.Provider value={{ paletteId, palette, setPaletteId }}>
+    <PaletteCtx.Provider value={{ paletteId, palette, setPaletteId, fontPairId, fontPair, setFontPairId }}>
       {children}
     </PaletteCtx.Provider>
   );
