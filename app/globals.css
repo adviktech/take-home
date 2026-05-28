@@ -116,3 +116,36 @@ h1, h2, h3, h4, h5, h6 {
   to   { opacity: 1; transform: translateY(0); }
 }
 .fade-up { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ── Hero CTA breathing glow ────────────────────────────── */
+/* Subtle box-shadow pulse on the primary call-to-action button only */
+@keyframes heroGlow {
+  0%, 100% { box-shadow: 0 0 0 0 transparent, 0 4px 16px rgba(217,119,6,0); }
+  50%       { box-shadow: 0 0 0 4px rgba(217,119,6,0.18), 0 8px 24px rgba(217,119,6,0.22); }
+}
+.hero-cta-glow {
+  animation: heroGlow 3s ease-in-out infinite;
+}
+
+/* ── Accessibility: reduce motion ───────────────────────── */
+/* When the user has requested reduced motion, disable all non-essential
+   animations. Framer Motion also reads this preference, but we add CSS
+   coverage here as a safety net. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
+
+  .hero-cta-glow {
+    animation: none;
+  }
+}

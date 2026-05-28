@@ -212,17 +212,28 @@ export default function Hero() {
             {/* CTAs */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.0 }}
               className="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="#calculator" className="btn-fill px-8 py-4 rounded-xl font-montserrat font-black text-base text-center"
-                style={{ background: "var(--text)", color: "var(--bg)", border: "2px solid var(--text)" }}>
+              <motion.a
+                href="#calculator"
+                className="btn-fill px-8 py-4 rounded-xl font-montserrat font-black text-base text-center hero-cta-glow"
+                style={{ background: "var(--text)", color: "var(--bg)", border: "2px solid var(--text)" }}
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              >
                 Calculate My Take-Home →
-              </a>
-              <a href="#how-it-works"
-                className="px-8 py-4 rounded-xl font-montserrat font-black text-base text-center transition-all duration-200"
+              </motion.a>
+              <motion.a
+                href="#how-it-works"
+                className="px-8 py-4 rounded-xl font-montserrat font-black text-base text-center transition-colors duration-200"
                 style={{ background: "transparent", color: "var(--text)", border: "2px solid var(--border)" }}
                 onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--accent)"; el.style.color = "var(--accent)"; }}
-                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--border)"; el.style.color = "var(--text)"; }}>
+                onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--border)"; el.style.color = "var(--text)"; }}
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              >
                 See How It Works
-              </a>
+              </motion.a>
             </motion.div>
 
             {/* Stats strip */}
@@ -244,10 +255,14 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: Live dashboard (desktop only) */}
-          <div className="hidden lg:block relative">
+          {/* Right: Live dashboard (desktop only) — entry via LiveDashboard, then bobs continuously */}
+          <motion.div
+            className="hidden lg:block relative"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
+          >
             <LiveDashboard />
-          </div>
+          </motion.div>
         </div>
       </div>
 

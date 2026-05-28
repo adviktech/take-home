@@ -24,8 +24,15 @@ export default function IoTStack() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {hardware.map((item, i) => (
-            <motion.div key={item.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: i * 0.12 }}
-              className="card p-7">
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.10)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.12 }}
+              className="card p-7"
+            >
               <span className="inline-block font-outfit text-xs font-bold px-3 py-1 rounded-full mb-5" style={{ background: "var(--accent-light)", color: "var(--accent)" }}>{item.tag}</span>
               <h3 className="font-montserrat font-black text-xl mb-1" style={{ color: "var(--text)" }}>{item.title}</h3>
               <p className="font-outfit text-sm font-semibold mb-4" style={{ color: "var(--accent)" }}>{item.subtitle}</p>

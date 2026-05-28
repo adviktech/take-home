@@ -27,8 +27,15 @@ export default function Testimonials() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {reviews.map((r, i) => (
-            <motion.div key={r.name} initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="card p-6 flex flex-col">
+            <motion.div
+              key={r.name}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.10)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
+              className="card p-6 flex flex-col"
+            >
               {/* Quotation mark */}
               <div className="font-montserrat font-black text-6xl leading-none mb-2" style={{ color: "var(--accent)", opacity: 0.3 }}>&ldquo;</div>
               {/* Stars */}

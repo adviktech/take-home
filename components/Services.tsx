@@ -29,9 +29,16 @@ export default function Services() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {services.map((s, i) => (
-            <motion.div key={s.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.06 }}
-              className="card p-6 group cursor-default">
-              <div className="font-montserrat font-black text-4xl mb-4 transition-colors" style={{ color: "var(--border)" }}>{s.num}</div>
+            <motion.div
+              key={s.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.10)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.06 }}
+              className="card p-6 group cursor-default"
+            >
+              <div className="font-montserrat font-black text-4xl mb-4 transition-colors duration-300 group-hover:text-accent" style={{ color: "var(--border)" }}>{s.num}</div>
               <h3 className="font-montserrat font-bold text-lg mb-2" style={{ color: "var(--text)" }}>{s.title}</h3>
               <p className="font-outfit text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{s.description}</p>
               <div className="mt-5 flex items-center gap-1 font-outfit text-xs font-semibold" style={{ color: "var(--accent)" }}>

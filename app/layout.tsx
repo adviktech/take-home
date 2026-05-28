@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat, Outfit } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Preloader from "@/components/Preloader";
+import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -28,6 +30,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-theme="light" className={`${montserrat.variable} ${outfit.variable}`}>
       <body>
+        <Preloader />
+        <ScrollProgress />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
