@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
+import FleetDashboard from "@/components/FleetDashboard";
 import Stats from "@/components/Stats";
 import TakeHomeCalculator from "@/components/TakeHomeCalculator";
 import HowItWorks from "@/components/HowItWorks";
@@ -16,8 +17,9 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TrustStrip />
-      <Stats />
       <TakeHomeCalculator />
+      <FleetDashboard />
+      <Stats />
       <HowItWorks />
       <Services />
       <IoTStack />

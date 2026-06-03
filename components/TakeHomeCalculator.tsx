@@ -299,7 +299,7 @@ function GuaranteeArchPanel() {
       </div>
 
       {/* FourFleet flow */}
-      <div className="rounded-2xl p-5" style={{ background: "var(--accent-light)", border: "1px solid var(--accent)" }}>
+      <div className="rounded-2xl p-5" style={{ background: "var(--bg)", border: "1px solid var(--accent)" }}>
         <div className="flex items-center gap-2 mb-2">
           <span className="font-outfit text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--accent)" }}>FourFleet Model</span>
           <span className="px-2 py-0.5 rounded-full font-outfit text-[9px] font-bold uppercase" style={{ background: "var(--accent)", color: "var(--bg)" }}>Guaranteed</span>
